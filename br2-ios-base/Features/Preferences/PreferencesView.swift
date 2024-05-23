@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct PreferencesView: View {
-    @State private var preferences: [Preference] = [
-        Preference(id: "aosidjaos-erferfid-erfknj" ,displayName: "Username", type: String.self, value: "John Doe"),
-        Preference(id: "34tegr-eroiufn-erf", displayName: "Notifications", type: Bool.self, value: true),
-        Preference(id: "neoijfe-804ro3ji-erf", displayName: "Age", type: Int.self, value: 30)
-    ]
+    @EnvironmentObject var appState: AppState
+    @ObservedObject var vm: PreferencesViewModel
     
     var body: some View {
         NavigationView {
             List {
-                ForEach(preferences.indices, id: \.self) { index in
-                    self.preferenceView(for: self.preferences[index])
+                ForEach(vm.preferences.indices, id: \.self) { index in
+                    self.preferenceView(for: vm.preferences[index])
                 }
             }
             .navigationTitle("Preferences")
@@ -65,12 +62,15 @@ struct PreferencesView: View {
     }
 
     private func updatePreference(at preference: Preference, with newValue: Any) {
-        if let index = preferences.firstIndex(where: { $0.displayName == preference.displayName }) {
-            preferences[index].value = newValue
+        if let index = vm.preferences.firstIndex(where: { $0.displayName == preference.displayName }) {
+            vm.preferences[index].value = newValue
         }
     }
 }
 
 #Preview {
-    PreferencesView()
+    let appState = AppState()
+    let viewModel = PreferencesViewModel(appState: appState)
+    return PreferencesView(vm: viewModel)
+        .environmentObject(appState)
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 @MainActor
 class AppState: ObservableObject {
@@ -13,7 +14,8 @@ class AppState: ObservableObject {
     @Published var isLoading: Bool = false
 
     // Auth
-    @Published var userCredentials: Any? = nil
+    @Published var user: User? = nil
+    @Published var isLoggedIn: Bool = false
     
     // Preferences
     @Published var preferenceList: [Preference]? = nil

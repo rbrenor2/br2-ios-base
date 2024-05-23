@@ -11,7 +11,7 @@ struct ContentView: View {
     @StateObject private var appState = AppState()
     
     var body: some View {
-        AuthView()
+        AuthView(vm: AuthViewModel(appState: appState))
             .environmentObject(appState)
     }
 }

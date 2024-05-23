@@ -8,26 +8,39 @@
 import SwiftUI
 
 struct HomeView: View {
+    @EnvironmentObject var appState: AppState
+    @ObservedObject var vm: HomeViewModel
+    
     var body: some View {
-        TabView {
-            TabContentView(tabIndex: 1)
-                .tabItem {
-                    Image(systemName: "1.circle")
-                    Text("Tab 1")
-                }
-
-            TabContentView(tabIndex: 2)
-                .tabItem {
-                    Image(systemName: "2.circle")
-                    Text("Tab 2")
-                }
-
-            TabContentView(tabIndex: 3)
-                .tabItem {
-                    Image(systemName: "3.circle")
-                    Text("Tab 3")
-                }
+        NavigationView {
+            TabView {
+                TabContentView(tabIndex: 1)
+                    .tabItem {
+                        Image(systemName: "1.circle")
+                    }
+                
+                UserProfileView(vm: UserProfileViewModel(appState: appState))
+                    .tabItem {
+                        Image(systemName: "2.circle")
+                        Text("User Profile")
+                    }
+                
+                PreferencesView(vm: PreferencesViewModel(appState: appState))
+                    .tabItem {
+                        Image(systemName: "3.circle")
+                        Text("Preferences")
+                    }
+            }.navigationBarTitle("Home", displayMode: .inline)
+                .navigationBarItems(trailing:
+                    Button(action: {
+                        vm.logout()
+                    }) {
+                        Image(systemName: "power")
+                            .foregroundColor(.red)
+                    }
+                )
         }
+        
     }
 }
 
@@ -46,5 +59,8 @@ struct TabContentView: View {
 }
 
 #Preview {
-    HomeView()
+    let appState = AppState()
+    let viewModel = HomeViewModel(appState: appState)
+    return HomeView(vm: viewModel)
+        .environmentObject(appState)
 }

@@ -8,14 +8,13 @@
 import SwiftUI
 
 struct UserProfileView: View {
-    var userName: String
-    var userEmail: String
-    var userAvatar: String
+    @EnvironmentObject var appState: AppState
+    @ObservedObject var vm: UserProfileViewModel
 
     var body: some View {
         VStack(spacing: 20) {
             // Avatar Image
-            Image(userAvatar)
+            Image(vm.userAvatarUrl)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .frame(width: 150, height: 150)
@@ -27,12 +26,12 @@ struct UserProfileView: View {
                 .padding(.top, 50)
             
             // User Name
-            Text(userName)
+            Text(vm.name)
                 .font(.title)
                 .fontWeight(.bold)
             
             // User Email
-            Text(userEmail)
+            Text(vm.email)
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
@@ -43,5 +42,8 @@ struct UserProfileView: View {
 }
 
 #Preview {
-    UserProfileView(userName: "John Doe", userEmail: "john.doe@example.com", userAvatar: "profileImage")
+    let appState = AppState()
+    let viewModel = UserProfileViewModel(appState: appState)
+    return UserProfileView(vm: viewModel)
+        .environmentObject(appState)
 }
