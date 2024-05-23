@@ -12,6 +12,7 @@ import FirebaseAuth
 class AppState: ObservableObject {
     // General
     @Published var isLoading: Bool = false
+    @Published var error: String? = nil
 
     // Auth
     @Published var user: User? = nil

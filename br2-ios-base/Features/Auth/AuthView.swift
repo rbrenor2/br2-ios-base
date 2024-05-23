@@ -71,6 +71,9 @@ struct AuthView: View {
                         })
                     }
                 .disabled(vm.isLoginButtonDisabled || vm.appState.isLoading)
+                .simultaneousGesture(TapGesture().onEnded({ _ in
+                    vm.login(type: .EmailPassword)
+                }))
 
 //                // Divider
 //                HStack {

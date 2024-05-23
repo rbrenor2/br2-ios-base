@@ -31,39 +31,34 @@ class AuthViewModel: ObservableObject {
     }
 
     func login(type: AuthType) {
+        print("Login called")
         appState.isLoading = true
-//        if(type == AuthType.EmailPassword) {
-//            Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-//                guard let user = authResult?.user else { return }
-//                self?.appState.user = user
-//                self?.appState.isLoggedIn = true
-//                self?.appState.isLoading = false
-//            }
-//        }
-        
-        authService.loginWithEmailAndPassword(email: email, password: password)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
+    
+        if(type == AuthType.EmailPassword) {
+            authService.loginWithEmailAndPassword(email: email, password: password)
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    switch completion {
+                    case .finished:
+                        break
+                    case .failure(let error):
+                        self?.appState.isLoading = false
+                        // Handle error
+                        print("Login failed: \(error.localizedDescription)")
+                    }
+                } receiveValue: { [weak self] user in
+                    self?.appState.user = user
+                    self?.appState.isLoggedIn = true
                     self?.appState.isLoading = false
-                    // Handle error
-                    print("Login failed: \(error.localizedDescription)")
                 }
-            } receiveValue: { [weak self] user in
-                self?.appState.user = user
-                self?.appState.isLoggedIn = true
-                self?.appState.isLoading = false
-            }
-            .store(in: &cancellables)
+                .store(in: &cancellables)
+        }
     }
     
     func register(type: AuthType, email: String?, password: String?) {
         appState.isLoading = true
     }
-    
+        
     private func setupBindings() {
         Publishers.CombineLatest($email, $password)
             .map { [weak self] email, password in

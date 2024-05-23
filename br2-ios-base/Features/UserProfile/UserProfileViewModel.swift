@@ -4,24 +4,6 @@
 //
 //  Created by Breno R R on 20/05/2024.
 //
-
-import SwiftUI
-
-enum AccountPlanType {
-    case Free
-}
-
-struct AccountPlan {
-    let displayName: String
-    let type: AccountPlanType
-}
-
-struct UserProfile {
-    let name: String
-    let email: String
-    let accountPlan: AccountPlan
-}
-
 import SwiftUI
 import FirebaseAuth
 import Combine
@@ -29,34 +11,49 @@ import Combine
 @MainActor
 class UserProfileViewModel: ObservableObject {
     var appState: AppState
+    private let userProfileService = UserProfileService()
+
     @Published var userAvatarUrl: String = ""
     @Published var name: String = "John Doe"
     @Published var email: String = "test@test.com"
 
-    
     private var cancellables = Set<AnyCancellable>()
     
     init(appState: AppState) {
         self.appState = appState
-//        setupBindings()
+    }
+    
+    func loadUserProfile() {
+        if appState.userProfile == nil {
+            guard let email = appState.user!.email else { return }
+            self.fetchUserProfile(email: email)
+        }
+    }
+    
+    func fetchUserProfile(email: String) {
+        appState.isLoading = true
+        
+        userProfileService.getUserProfile(email: email)
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.appState.isLoading = false
+                switch completion {
+                case .failure(let error):
+                    self.appState.error = error.localizedDescription
+                case .finished:
+                    break
+                }
+            } receiveValue: { userProfile in
+                self.appState.userProfile = userProfile
+                print(userProfile)
+                
+            }
+            .store(in: &cancellables)
     }
 
     
   
     
-//    private func setupBindings() {
-//        Publishers.CombineLatest($email, $password)
-//            .map { [weak self] email, password in
-//                return !(self?.isValidEmail(email) ?? false) || password.isEmpty
-//            }
-//            .assign(to: \.isLoginButtonDisabled, on: self)
-//            .store(in: &cancellables)
-//    }
 
-//    private func isValidEmail(_ email: String) -> Bool {
-//        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-//        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-//        return emailPredicate.evaluate(with: email)
-//    }
 }
 

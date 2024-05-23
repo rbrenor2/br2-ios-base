@@ -45,7 +45,10 @@ struct HomeView: View {
             .background(
                 NavigationLink(
                     destination: AuthView(vm: AuthViewModel(appState: appState)).navigationBarBackButtonHidden(true),
-                    isActive: $appState.isLoggedIn
+                    isActive: Binding(
+                        get: { !appState.isLoggedIn },
+                        set: { newValue in appState.isLoggedIn = !newValue }
+                    )
                 ) {
                     EmptyView()
                 }

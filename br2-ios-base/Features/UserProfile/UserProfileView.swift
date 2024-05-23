@@ -26,18 +26,26 @@ struct UserProfileView: View {
                 .padding(.top, 50)
             
             // User Name
-            Text(vm.name)
+            Text(appState.userProfile?.name ?? "")
                 .font(.title)
                 .fontWeight(.bold)
             
             // User Email
-            Text(vm.email)
+            Text(appState.user?.email ?? "")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+            
+            // User Email
+            Text(appState.userProfile?.accountType ?? "")
                 .font(.subheadline)
                 .foregroundColor(.gray)
             
             Spacer()
         }
         .padding()
+        .onAppear {
+            vm.loadUserProfile()
+        }
     }
 }
 

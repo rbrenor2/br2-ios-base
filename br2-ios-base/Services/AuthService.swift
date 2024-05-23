@@ -9,14 +9,6 @@ import FirebaseAuth
 import Combine
 
 struct AuthService {
-//    func loginWithEmailAndPassword(email: String, password: String) -> User {
-//        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
-//            guard let user = authResult?.user else { return }
-//            
-//            return user
-//        }
-//    }
-    
     func loginWithEmailAndPassword(email: String, password: String) -> AnyPublisher<User, Error> {
         Future { promise in
             Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
@@ -45,4 +37,5 @@ struct AuthService {
             }
         }
         .eraseToAnyPublisher()
-    }}
+    }
+}
