@@ -35,11 +35,14 @@ struct AuthService {
     func loginWithGoogle() -> Void { }
     func loginWithApple() -> Void { }
     
-    func logout() -> Void {
-        do {
-            try Auth.auth().signOut()
-        } catch {
-            print("Error signing out: \(error.localizedDescription)")
+    func logout() -> AnyPublisher<Bool, Error> {
+        Future { promise in
+            do {
+                try Auth.auth().signOut()
+                promise(.success(true))
+            } catch {
+                promise(.failure(error))
+            }
         }
-    }
-}
+        .eraseToAnyPublisher()
+    }}

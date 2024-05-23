@@ -11,6 +11,8 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @ObservedObject var vm: HomeViewModel
     
+    @State private var showingAuthView = false
+    
     var body: some View {
         NavigationView {
             TabView {
@@ -30,15 +32,27 @@ struct HomeView: View {
                         Image(systemName: "3.circle")
                         Text("Preferences")
                     }
-            }.navigationBarTitle("Home", displayMode: .inline)
-                .navigationBarItems(trailing:
-                    Button(action: {
-                        vm.logout()
-                    }) {
-                        Image(systemName: "power")
-                            .foregroundColor(.red)
-                    }
-                )
+            }
+            .navigationBarTitle("Home", displayMode: .inline)
+            .navigationBarItems(trailing:
+                Button(action: {
+                    vm.logout()
+                }) {
+                    Image(systemName: "power")
+                        .foregroundColor(.red)
+                }
+            )
+            .background(
+                NavigationLink(
+                    destination: AuthView(vm: AuthViewModel(appState: appState)).navigationBarBackButtonHidden(true),
+                    isActive: $appState.isLoggedIn
+                ) {
+                    EmptyView()
+                }
+            )
+            .onAppear {
+                appState.isLoggedIn = true // Simulating the user is logged in
+            }
         }
         
     }

@@ -25,6 +25,20 @@ class HomeViewModel: ObservableObject {
     
     func logout() {
         authService.logout()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    print("Error logging out: \(error.localizedDescription)")
+                }
+            }, receiveValue: { success in
+                if success {
+                    self.appState.isLoggedIn = false
+                }
+            })
+            .store(in: &cancellables)
     }
 
     
