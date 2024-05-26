@@ -27,7 +27,7 @@ struct HomeView: View {
                         Text("User Profile")
                     }
                 
-                PreferencesView(vm: PreferencesViewModel(appState: appState))
+                PreferenceView(vm: PreferenceViewModel(appState: appState))
                     .tabItem {
                         Image(systemName: "3.circle")
                         Text("Preferences")
@@ -55,6 +55,7 @@ struct HomeView: View {
             )
             .onAppear {
                 appState.isLoggedIn = true // Simulating the user is logged in
+                vm.fetchPreferencesDefinition()
             }
         }
         

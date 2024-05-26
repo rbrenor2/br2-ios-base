@@ -27,7 +27,7 @@ struct UserProfileService {
                         promise(.failure(error))
                     }
                 } else {
-                    let error = UserProfileError.documentNotFound
+                    let error = GeneralError.documentNotFound
                     promise(.failure(error))
                 }
             }

@@ -37,7 +37,9 @@ struct AuthView: View {
                     .padding(.horizontal, 20)
 
                 // Login Button
-                NavigationLink(destination: HomeView(vm: HomeViewModel(appState: appState)).navigationBarBackButtonHidden(true)) {
+                NavigationLink(destination: HomeView(vm: HomeViewModel(appState: appState)).navigationBarBackButtonHidden(true),
+                               isActive: $appState.isLoggedIn
+                ) {
                         ZStack(content: {
                             if(vm.appState.isLoading) {
                                 ProgressView()

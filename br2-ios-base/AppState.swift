@@ -19,8 +19,9 @@ class AppState: ObservableObject {
     @Published var isLoggedIn: Bool = false
     
     // Preferences
-    @Published var preferenceList: [Preference]? = nil
-    
+    @Published var preferences: [Preference]? = nil
+    @Published var preferencesDefinition: [PreferenceDefinition]? = nil
+
     // User Profile
     @Published var userProfile: UserProfile? = nil
 }

@@ -18,12 +18,6 @@ struct UserProfile: Codable, Identifiable {
     }
 }
 
-enum UserProfileError: Error {
-    case documentNotFound
-    case invalidData
-    case unknownError
-}
-
 enum AccountPlanType {
     case Free
 }

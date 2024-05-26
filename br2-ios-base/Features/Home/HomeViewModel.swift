@@ -13,7 +13,8 @@ import Combine
 class HomeViewModel: ObservableObject {
     var appState: AppState
     let authService: AuthService = AuthService()
-
+    let preferenceService: PreferenceService = PreferenceService()
+    
     @Published var something: String = ""
     
     private var cancellables = Set<AnyCancellable>()
@@ -29,6 +30,7 @@ class HomeViewModel: ObservableObject {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
+                    self.appState = AppState()
                     break
                 case .failure(let error):
                     print("Error logging out: \(error.localizedDescription)")
@@ -38,6 +40,27 @@ class HomeViewModel: ObservableObject {
                     self.appState.isLoggedIn = false
                 }
             })
+            .store(in: &cancellables)
+    }
+    
+    func fetchPreferencesDefinition() {
+        appState.isLoading = true
+        
+        preferenceService.getPreferencesDefinitions()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.appState.isLoading = false
+                switch completion {
+                case .failure(let error):
+                    self.appState.error = error.localizedDescription
+                case .finished:
+                    break
+                }
+            } receiveValue: { preferences in
+                self.appState.preferencesDefinition = preferences
+                print(preferences)
+                
+            }
             .store(in: &cancellables)
     }
 
