@@ -11,27 +11,16 @@ import Combine
 @MainActor
 class PreferenceViewModel: ObservableObject {
     var appState: AppState
+    
     private let preferenceService = PreferenceService()
-
-    @Published var preferences: [Preference] = [
-        Preference(id: "aosidjaos-erferfid-erfknj" ,displayName: "Username", type: PreferenceType.TEXT_INPUT.rawValue, valueText: "Breno Rios"),
-        Preference(id: "34tegr-eroiufn-erf", displayName: "Notifications", type: PreferenceType.TOGGLE.rawValue, valueBool: true ),
-        Preference(id: "neoijfe-804ro3ji-erf", displayName: "Age", type: PreferenceType.INTEGER_INPUT.rawValue, valueInt: 25)
-    ]
-
     private var cancellables = Set<AnyCancellable>()
     
     init(appState: AppState) {
         self.appState = appState
-        self.preferences = appState.preferences ??  [
-            Preference(id: "aosidjaos-erferfid-erfknj" ,displayName: "Username", type: PreferenceType.TEXT_INPUT.rawValue, valueText: "Breno Rios"),
-            Preference(id: "34tegr-eroiufn-erf", displayName: "Notifications", type: PreferenceType.TOGGLE.rawValue, valueBool: true ),
-            Preference(id: "neoijfe-804ro3ji-erf", displayName: "Age", type: PreferenceType.INTEGER_INPUT.rawValue, valueInt: 25)
-        ]
     }
     
     func loadPreferences() {
-        if appState.preferences == nil {
+        if appState.preferences.count == 0 && appState.user?.email != nil {
             self.fetchPreferencesFromUser()
         }
     }
@@ -50,23 +39,20 @@ class PreferenceViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { preferences in
-                
-                self.appState.preferences = preferences.map({ preference in
-                    let info = self.appState.preferencesDefinition?.filter({ definition in
-                        definition.id == preference.id
-                    })[0]
-                    
+                self.appState.preferences = preferences.compactMap { preference in
+                    guard let info = self.appState.preferencesDefinition?.first(where: { $0.id == preference.id }) else {
+                        return nil
+                    }
+
                     var newPreference = preference
-                    newPreference.displayName = info?.displayName
-                    newPreference.type = info?.type
-                    
+                    newPreference.displayName = info.displayName
+                    newPreference.type = info.type
+
                     return newPreference
-                })
+                }
                 print(preferences)
                 
             }
             .store(in: &cancellables)
     }
-    
-    
 }

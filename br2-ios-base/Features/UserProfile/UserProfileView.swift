@@ -9,38 +9,44 @@ import SwiftUI
 
 struct UserProfileView: View {
     @EnvironmentObject var appState: AppState
-    @ObservedObject var vm: UserProfileViewModel
+    @StateObject var vm: UserProfileViewModel
 
     var body: some View {
         VStack(spacing: 20) {
-            // Avatar Image
-            Image(vm.userAvatarUrl)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: 150, height: 150)
-                .clipShape(Circle())
-                .overlay(
-                    Circle().stroke(Color.white, lineWidth: 4)
-                )
-                .shadow(radius: 10)
-                .padding(.top, 50)
-            
-            // User Name
-            Text(appState.userProfile?.name ?? "")
-                .font(.title)
-                .fontWeight(.bold)
-            
-            // User Email
-            Text(appState.user?.email ?? "")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
-            // User Email
-            Text(appState.userProfile?.accountType ?? "")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            
-            Spacer()
+            if appState.userProfile == nil {
+                ProgressView()
+            } else {
+                // Avatar Image
+                Image(vm.userAvatarUrl)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: 150, height: 150)
+                    .clipShape(Circle())
+                    .overlay(
+                        Circle().stroke(Color.white, lineWidth: 4)
+                    )
+                    .shadow(radius: 10)
+                    .padding(.top, 50)
+                
+                // User Name
+                Text(appState.userProfile?.name ?? "")
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                // User Email
+                Text(appState.user?.email ?? "")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                
+                // User Email
+                Text(vm.accountName ?? "aqui")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                Text(vm.accountDescription ?? "aqui")
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+                Spacer()
+            }
         }
         .padding()
         .onAppear {

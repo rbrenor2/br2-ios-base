@@ -14,14 +14,14 @@ class HomeViewModel: ObservableObject {
     var appState: AppState
     let authService: AuthService = AuthService()
     let preferenceService: PreferenceService = PreferenceService()
-    
+    let accountService: AccountService = AccountService()
+
     @Published var something: String = ""
     
     private var cancellables = Set<AnyCancellable>()
     
     init(appState: AppState) {
         self.appState = appState
-//        setupBindings()
     }
     
     func logout() {
@@ -30,7 +30,7 @@ class HomeViewModel: ObservableObject {
             .sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
-                    self.appState = AppState()
+                    self.appState.setInitialState()
                     break
                 case .failure(let error):
                     print("Error logging out: \(error.localizedDescription)")
@@ -63,22 +63,23 @@ class HomeViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-
     
-  
-    
-//    private func setupBindings() {
-//        Publishers.CombineLatest($email, $password)
-//            .map { [weak self] email, password in
-//                return !(self?.isValidEmail(email) ?? false) || password.isEmpty
-//            }
-//            .assign(to: \.isLoginButtonDisabled, on: self)
-//            .store(in: &cancellables)
-//    }
-
-//    private func isValidEmail(_ email: String) -> Bool {
-//        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-//        let emailPredicate = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-//        return emailPredicate.evaluate(with: email)
-//    }
+    func fetchAccountsDefinition() {
+        appState.isLoading = true
+        
+        accountService.getAccountsDefinition()
+            .receive(on: DispatchQueue.main)
+            .sink { completion in
+                self.appState.isLoading = false
+                switch completion {
+                case .failure(let error):
+                    self.appState.error = error.localizedDescription
+                case .finished:
+                    break
+                }
+            } receiveValue: { definitions in
+                self.appState.accountsDefinition = definitions
+            }
+            .store(in: &cancellables)
+    }
 }

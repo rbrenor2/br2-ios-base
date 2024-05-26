@@ -18,10 +18,30 @@ class AppState: ObservableObject {
     @Published var user: User? = nil
     @Published var isLoggedIn: Bool = false
     
+    // Account
+    @Published var accountsDefinition: [AccountDefinition]? = nil
+    
     // Preferences
-    @Published var preferences: [Preference]? = nil
+    @Published var preferences: [Preference] = []
     @Published var preferencesDefinition: [PreferenceDefinition]? = nil
 
     // User Profile
     @Published var userProfile: UserProfile? = nil
+    
+    init() {
+        self.setInitialState()
+    }
+    
+    func setInitialState() {
+        self.isLoading = false
+        self.error = nil
+        self.user = nil
+        self.isLoggedIn = false
+        self.preferences = []
+        self.preferencesDefinition = nil
+        self.userProfile = nil
+        self.accountsDefinition = nil
+    }
 }
+
+

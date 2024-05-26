@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HomeView: View {
     @EnvironmentObject var appState: AppState
-    @ObservedObject var vm: HomeViewModel
+    @StateObject var vm: HomeViewModel
     
     @State private var showingAuthView = false
     
@@ -56,6 +56,7 @@ struct HomeView: View {
             .onAppear {
                 appState.isLoggedIn = true // Simulating the user is logged in
                 vm.fetchPreferencesDefinition()
+                vm.fetchAccountsDefinition()
             }
         }
         

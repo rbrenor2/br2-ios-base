@@ -17,6 +17,8 @@
 		673BDCCE2BFFB08C0097B038 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BDCCD2BFFB08C0097B038 /* Preference.swift */; };
 		673BDCD02C008D6F0097B038 /* GeneralError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BDCCF2C008D6F0097B038 /* GeneralError.swift */; };
 		673BDCD32C008FCD0097B038 /* ResourcePaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BDCD22C008FCD0097B038 /* ResourcePaths.swift */; };
+		673BDCD52C0330030097B038 /* AccountDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BDCD42C0330030097B038 /* AccountDefinition.swift */; };
+		673BDCD72C03325C0097B038 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 673BDCD62C03325C0097B038 /* AccountService.swift */; };
 		6764D7372BFBBAEC00119D62 /* br2_ios_baseApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6764D7362BFBBAEC00119D62 /* br2_ios_baseApp.swift */; };
 		6764D7392BFBBAEC00119D62 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6764D7382BFBBAEC00119D62 /* ContentView.swift */; };
 		6764D73B2BFBBAED00119D62 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6764D73A2BFBBAED00119D62 /* Assets.xcassets */; };
@@ -58,6 +60,8 @@
 		673BDCCD2BFFB08C0097B038 /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		673BDCCF2C008D6F0097B038 /* GeneralError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralError.swift; sourceTree = "<group>"; };
 		673BDCD22C008FCD0097B038 /* ResourcePaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourcePaths.swift; sourceTree = "<group>"; };
+		673BDCD42C0330030097B038 /* AccountDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDefinition.swift; sourceTree = "<group>"; };
+		673BDCD62C03325C0097B038 /* AccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		6764D7332BFBBAEC00119D62 /* br2-ios-base.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "br2-ios-base.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6764D7362BFBBAEC00119D62 /* br2_ios_baseApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = br2_ios_baseApp.swift; sourceTree = "<group>"; };
 		6764D7382BFBBAEC00119D62 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -121,6 +125,7 @@
 				673BDCC92BFF67510097B038 /* UserProfile.swift */,
 				673BDCCD2BFFB08C0097B038 /* Preference.swift */,
 				673BDCCF2C008D6F0097B038 /* GeneralError.swift */,
+				673BDCD42C0330030097B038 /* AccountDefinition.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 				6764D76A2BFBDA4400119D62 /* AuthService.swift */,
 				673BDCC12BFF654B0097B038 /* UserProfileService.swift */,
 				673BDCCB2BFFB05B0097B038 /* PreferenceService.swift */,
+				673BDCD62C03325C0097B038 /* AccountService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -336,6 +342,7 @@
 				673BDCCA2BFF67510097B038 /* UserProfile.swift in Sources */,
 				6764D7592BFBCBEF00119D62 /* PreferenceView.swift in Sources */,
 				6764D76B2BFBDA4400119D62 /* AuthService.swift in Sources */,
+				673BDCD52C0330030097B038 /* AccountDefinition.swift in Sources */,
 				6764D7632BFBD06100119D62 /* HomeView.swift in Sources */,
 				673BDCC22BFF654B0097B038 /* UserProfileService.swift in Sources */,
 				673BDCCC2BFFB05B0097B038 /* PreferenceService.swift in Sources */,
@@ -343,6 +350,7 @@
 				673BDCD02C008D6F0097B038 /* GeneralError.swift in Sources */,
 				6764D75E2BFBCCD000119D62 /* UserProfileView.swift in Sources */,
 				673BDCCE2BFFB08C0097B038 /* Preference.swift in Sources */,
+				673BDCD72C03325C0097B038 /* AccountService.swift in Sources */,
 				673BDCD32C008FCD0097B038 /* ResourcePaths.swift in Sources */,
 				6764D7672BFBD9BB00119D62 /* AppState.swift in Sources */,
 				6764D7372BFBBAEC00119D62 /* br2_ios_baseApp.swift in Sources */,

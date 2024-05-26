@@ -8,4 +8,5 @@
 enum ResourcePaths: String {
     case userProfiles = "userProfiles"
     case preferences = "preferences"
+    case accountTypes = "accountTypes"
 }

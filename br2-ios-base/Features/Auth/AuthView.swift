@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AuthView: View {
     @EnvironmentObject var appState: AppState
-    @ObservedObject var vm: AuthViewModel
+    @StateObject var vm: AuthViewModel
 
     var body: some View {
         NavigationStack {
