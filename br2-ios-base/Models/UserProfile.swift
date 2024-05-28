@@ -10,11 +10,13 @@ struct UserProfile: Codable, Identifiable {
     @DocumentID var id: String?
     var name: String
     var accountType: String
+    var showOnboarding: Bool
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
         case accountType
+        case showOnboarding
     }
 }
 

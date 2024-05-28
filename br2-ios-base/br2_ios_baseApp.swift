@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseCore
 import FirebaseAppCheck
+import SuperwallKit
 
 //7B083EA1-94D8-422E-8769-803B0F324EEE
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
       AppCheck.setAppCheckProviderFactory(providerFactory)
 
       FirebaseApp.configure()
+      Superwall.configure(apiKey: "pk_04d7bd4136ae4d1f8316f64d24461eceb39ab1fd732d87ba")
 
     return true
   }
