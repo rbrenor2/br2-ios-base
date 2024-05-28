@@ -11,6 +11,8 @@ struct HomeView: View {
     @EnvironmentObject var appState: AppState
     @StateObject var vm: HomeViewModel
     
+    @State private var showingOnboarding = true
+    
     @State private var showingAuthView = false
     
     var body: some View {
@@ -58,6 +60,10 @@ struct HomeView: View {
                 vm.fetchPreferencesDefinition()
                 vm.fetchAccountsDefinition()
             }
+            .fullScreenCover(isPresented: $showingOnboarding, content: {
+                OnboardingView.init()
+                    .edgesIgnoringSafeArea(.all)
+            })
         }
         
     }
