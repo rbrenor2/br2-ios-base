@@ -10,6 +10,10 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 struct PreferenceService {
+    static var shared = PreferenceService()
+    
+    private init() { }
+    
     private let db = Firestore.firestore()
     
     func getPreferencesDefinitions() -> AnyPublisher<[PreferenceDefinition], Error> {

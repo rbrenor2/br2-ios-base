@@ -11,6 +11,10 @@ import FirebaseFirestoreSwift
 
 
 struct UserProfileService {
+    static var shared = UserProfileService()
+    
+    private init() { }
+    
     private let db = Firestore.firestore()
     private let resourcePath = "userProfiles"
     
