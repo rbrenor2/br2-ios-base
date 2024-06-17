@@ -11,7 +11,6 @@ import Combine
 @MainActor
 class UserProfileViewModel: ObservableObject {
     var appState: AppState
-    private let userProfileService = UserProfileService()
 
     @Published var userAvatarUrl: String = ""
     @Published var name: String = "John Doe"
@@ -35,7 +34,7 @@ class UserProfileViewModel: ObservableObject {
     func fetchUserProfile(email: String) {
         appState.isLoading = true
         
-        userProfileService.getUserProfile(email: email)
+        UserProfileService.shared.getUserProfile(email: email)
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 self.appState.isLoading = false

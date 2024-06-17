@@ -11,8 +11,7 @@ import Combine
 @MainActor
 class PreferenceViewModel: ObservableObject {
     var appState: AppState
-    
-    private let preferenceService = PreferenceService()
+ 
     private var cancellables = Set<AnyCancellable>()
     
     init(appState: AppState) {
@@ -28,7 +27,7 @@ class PreferenceViewModel: ObservableObject {
     func fetchPreferencesFromUser() {
         appState.isLoading = true
         
-        preferenceService.getPreferencesForUser(email: appState.user?.email ?? "")
+        PreferenceService.shared.getPreferencesForUser(email: appState.user?.email ?? "")
             .receive(on: DispatchQueue.main)
             .sink { completion in
                 self.appState.isLoading = false
